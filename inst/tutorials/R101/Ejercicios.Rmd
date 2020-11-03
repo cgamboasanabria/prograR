@@ -1,0 +1,1753 @@
+---
+title: "Programación estadística en R - Ejercicios"
+author: |
+  | César Gamboa Sanabria
+  | [www.cesargamboasanabria.com](www.cesargamboasanabria.com)
+  |
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(echo = FALSE, exercise.checker = gradethis::grade_learnr, cache = FALSE, message = FALSE,warning = FALSE)
+```
+
+
+## 01-Fundamentos de R
+
+¡Bienvenido(a) al curso de Programación Estadística en R! Vamos a poner en práctica todo lo visto en la primera clase para verificar que todos los conceptos quedaron claros.
+
+### Conceptos básicos
+
+Lo primero será trabajar los fundamentos básicos del uso de R. En los siguientes ejercicios se te presentará una pequeña versión de la consola sobre la cual podrás trabajar.
+
+### Pregunta 1
+
+Vamos a calentar con una pregunta sencilla sobre algo que discutimos en la primer hora de clases:
+
+```{r P1}
+question("¿En qué posición de la pantalla siempre estará ubicada la consola?",
+  answer("Arriba a la izquierda"),
+  answer("Arriba a la derecha"),
+  answer("Abajo a la izquierda"),
+  answer("Abajo a la derecha"),
+  answer("En el centro"), 
+  answer("Depende", correct = TRUE),
+  correct = "¡Muy bien! La posición de la consola va a depender de donde la queramos, recuerda que esta opción puede modificarse en Tools/Global Options.",
+  incorrect = "Fallaste </3... La posición de la consola va a depender de donde la queramos, recuerda que esta opción puede modificarse en Tools/Global Options.",
+  submit_button = "Respuesta definitiva",
+  random_answer_order = TRUE)
+```
+
+### Pregunta 2
+
+Muy bien, ahora vamos a probar algo más avanzado. Utiliza la función c para generar un vector con los números 55, 56, 57, 58 y 59.
+
+```{r P2, exercise=TRUE}
+
+```
+```{r P2-check}
+grade_result(pass_if(55:59))
+```
+
+### Pregunta 3
+
+Ahora repite el ejercicio anterior, pero esta vez usando la función seq. Es decir, usando SOLAMENTE la función seq, genera el vector con los números 55, 56, 57, 58 y 59.
+
+```{r P3, exercise=TRUE}
+
+```
+```{r P3-solution}
+seq(55, 59, 1)
+```
+```{r P3-check}
+grade_code()
+```
+
+### Pregunta 4
+
+Ahora, también utilizando la función seq, genera un vector con los números 1, 3, 5, 7, 9 y 11. Recuerda que puedes buscar la función seq en la pestaña Help. Ahí puedes ver cómo funciona.
+
+```{r P4, exercise=TRUE}
+
+```
+```{r P4-solution}
+seq(1, 11, 2)
+```
+```{r P4-check}
+grade_code()
+```
+
+### Pregunta 5
+
+Ahora hagamos algo más elaborado. De igual forma, utilizando la función seq, fracciona el intervalo [1, 10] en 100 partes iguales. Es decir, el vector resultante tendrá 100 números, el primero es el 1, el último es el 10, y los restantes 98 números tendrán todos la misma distancia entre sí.
+
+```{r P5, exercise=TRUE}
+
+```
+```{r P5-solution}
+seq(1, 10, length.out  = 100)
+```
+```{r P5-check}
+grade_code(incorrect = "Pista: ¿Sabes cómo funcionan los argumentos length.out y along.with de la función seq?")
+```
+
+### Pregunta 6
+
+Wow... ¡Es impresionante cuánto has aprendido! Ya que parece que lo estás dominando, combinemos otras cosas que conversamos durante la primera clase.
+
+Consideremos los números 2, 4.1, 0.5, 1.8, 0.43, 0.03, 12 y 2.8. Recuerda que una de las ventajas de R es que podemos crear objetos, así que asignemos todos esos números a un objeto llamado x.
+
+```{r P6, exercise=TRUE}
+
+```
+```{r P6-solution}
+x <- c(2, 4.1, 0.5, 1.8, 0.43, 0.03, 12, 2.8)
+```
+```{r P6-check}
+grade_code(incorrect = "Pista: Recuerda que la función c() sirve para crear vectores...")
+```
+
+
+### Pregunta 7
+
+Ahora que creamos el objetos x, éste debería aparecer en el Environment. Ahora calculemos la raíz cuadrada de todos los números que están en el objeto x y guardemos este resultado en un objeto llamado y.
+
+```{r cargaP7}
+x <- c(2, 4.1, 0.5, 1.8, 0.43, 0.03, 12, 2.8)
+```
+```{r P7, exercise=TRUE, exercise.setup = "cargaP7"}
+
+```
+```{r P7-solution}
+y <- sqrt(x)
+```
+```{r P7-check}
+grade_code(incorrect = "Pista: ¿Sabes cómo calcular la raíz cuadrada de un número? ¡Bien! Ahora solo falta saber cómo se hace en R...")
+```
+
+### Pregunta 8
+
+Ahora calcula las diferencias entre los números originales que guardamos en "x" y sus raíces cuadradas, que llamamos "y".
+
+```{r cargaP8}
+x <- c(2, 4.1, 0.5, 1.8, 0.43, 0.03, 12, 2.8)
+y <- sqrt(x)
+```
+```{r P8, exercise=TRUE, exercise.setup = "cargaP8"}
+
+```
+```{r P8-solution}
+x-y
+```
+```{r P8-check}
+grade_code(incorrect = "¡Vamos! Es solo una operación aritmética...")
+```
+
+### Pregunta 9
+
+Muy bien, eso fue algo intenso... Ahora hagamos unos ejercicios para despertar el instinto programador que llevas dentro... Digamos que se va a ejecutar el comando "data<-c(7,4,6,8,9,1,0,3,2,5,0)". ¿Cuál crees que es el resultado? Cuando creas saber la respuesta copia el comando anterior y ejecútalo.
+
+
+```{r P9, exercise=TRUE}
+
+```
+```{r P9-solution}
+data<-c(7,4,6,8,9,1,0,3,2,5,0)
+```
+```{r P9-check}
+grade_code(incorrect = "Usa una poderosa herramienta... Copiar y pegar...")
+```
+
+
+### Pregunta 10
+
+¿Qué crees que hace el comando "sort(data)"? Cuando creas tener la respuesta solo copia, pega y ejecuta.
+
+```{r cargaP10}
+data<-c(7,4,6,8,9,1,0,3,2,5,0)
+```
+```{r P10, exercise=TRUE, exercise.setup = "cargaP10"}
+
+```
+```{r P10-solution}
+sort(data)
+```
+```{r P10-check}
+grade_code(incorrect="Copiar y pegar... Esa es la clave...")
+```
+
+
+### Pregunta 11
+
+¿Qué crees que hace el comando sum(data<5)? Cuando creas tener la respuesta... Bueno... Ya sabes...
+
+```{r cargaP11}
+data<-c(7,4,6,8,9,1,0,3,2,5,0)
+```
+```{r P11, exercise=TRUE, exercise.setup = "cargaP11"}
+
+```
+```{r P11-solution}
+sum(data<5)
+```
+```{r P11-check}
+grade_code(correct="¿¡Un momento!? ¡¿6!? ¡¿Por qué da ese resultado!? A ver, pensemos juntos por qué sucede esto... Veamos de nuevo los números, eran 7,4,6,8,9,1,0,3,2,5 y 0...")
+```
+
+### Pregunta 12
+
+¡Claro! La función "sum()" sirve para sumar, eso está claro... Pero lo que se suma no son los números mayores a 5, sino que se suma la CANTIDAD de números que cumplen esa condición...
+
+¿Qué crees que hace el comando data<5? Cuando creas saber la respuesta, ya sabes que hacer...
+
+```{r cargaP12}
+data<-c(7,4,6,8,9,1,0,3,2,5,0)
+```
+```{r P12, exercise=TRUE, exercise.setup = "cargaP12"}
+
+```
+```{r P12-solution}
+data<5
+```
+```{r P12-check}
+grade_code(incorrect = "Usa la fuerza... De copiar y pegar...")
+```
+
+### Pregunta 13
+
+Interesante... El resultado de la pregunta anterior es un vector de valores lógicos... ¿Qué pasará si ejecutamos el comando "1*(data<5)"? Cuando creas saber.. blah blah blah...
+
+```{r cargaP13}
+data<-c(7,4,6,8,9,1,0,3,2,5,0)
+```
+```{r P13, exercise=TRUE, exercise.setup = "cargaP13"}
+
+```
+```{r P13-solution}
+1*(data<5)
+```
+```{r P13-check}
+grade_code()
+```
+
+### Pregunta 14
+
+Interesante... Convierte los falsos en cero y los verdaderos en uno... Wow, R es muy interesante... He escuchado por ahí que hay una función llamada "which"... Me pregunto qué hará "which(data>5)"...
+
+```{r cargaP14}
+data<-c(7,4,6,8,9,1,0,3,2,5,0)
+```
+```{r P14, exercise=TRUE, exercise.setup = "cargaP14"}
+
+```
+```{r P14-solution}
+which(data>5)
+```
+```{r P14-check}
+grade_code(incorrect="No pienso repetirlo... ¬¬")
+```
+
+### Pregunta 15
+
+Bien, ahora que ya sabemos muchos de los conceptos y también dónde buscar si tenemos dudas, hagamos algo un poco más complicado... Vamos a crear un vector de longitud 100 cuyo contenido sea `TRUE` o `FALSE`, pero el orden en que aparecen debe ser totalmente aleatorio.
+
+```{r P15, exercise=TRUE}
+
+```
+```{r P15-solution}
+sample(c(TRUE,FALSE), 100, TRUE)
+```
+```{r P15-check}
+grade_code(incorrect="Pista: ¿Sabes cómo usar la función sample?")
+```
+
+### Pregunta 16
+
+El resultado anterior ofrece resultados como un vector de valores lógicos... ¿Qué harías para que sea un vector que solo tenga los números 0 y 1?
+
+```{r P16, exercise=TRUE}
+
+```
+```{r P16-solution}
+1*sample(c(TRUE,FALSE), 100, TRUE)
+```
+```{r P16-check}
+grade_code(incorrect="¡Hablamos esto en la primera clase!")
+```
+
+### Pregunta 17
+
+Es momento de subir nuevamente el nivel. Ahora vamos a combinar todo lo que hemos visto hasta el momento. Primero vamos a crear el objeto x, que es un vector de clase numeric de 50 números pares entre 1 y 100.
+
+
+```{r P17, exercise=TRUE}
+
+```
+```{r P17-solution}
+x <- seq(1, 100, 2)
+```
+```{r P17-check}
+grade_code(incorrect = "Creo que ya usamos la función seq...")
+```
+
+### Pregunta 18
+
+Ahora vamos a crear un objeto `y`, que es un vector de clase "character" con la frase "tengo un talento natural para programar en R".
+
+```{r P18, exercise=TRUE}
+
+```
+```{r P18-solution}
+y <- "tengo un talento natural para programar en R"
+```
+```{r P18-check}
+grade_code(incorrect="Recuerda que las cadenas de caracteres siempre van entre comillas...")
+```
+
+### Pregunta 19
+
+Ahora vamos a crear un objeto `z`, que es un vector de clase logical con exactamete 74 "TRUE", seguido por 148 "FALSE" y luego por "TRUE", "FALSE", "TRUE", "FALSE", etc, hasta que el vector tenga longitud 300.  
+
+
+```{r P19, exercise=TRUE}
+
+```
+```{r P19-solution}
+z <- c(rep(TRUE, 74), rep(FALSE, 148), rep(c(TRUE, FALSE), 39))
+```
+```{r P19-check}
+grade_code(incorrect="Pista: ¿Sabes usar la función rep?")
+```
+
+### Pregunta 20
+
+Todo parece estar en orden... Ahora verifiquemos que el vector z contenga 187 "FALSE" y 113 "TRUE". Puedes usar la función table para lograr esto.
+
+```{r cargaP20}
+z <- c(rep(TRUE, 74), rep(FALSE, 148), rep(c(TRUE, FALSE), 39))
+```
+```{r P20, exercise=TRUE, exercise.setup = "cargaP20"}
+
+```
+```{r P20-solution}
+table(z)
+```
+```{r P20-check}
+grade_code(incorrect="Vaya.. Veo que tienes problemas.. Puedes buscar la documentación de la función en el help...")
+```
+
+### Pregunta 21
+
+Ahora debes almacenar los objetos `x`, `y` y `z` en una lista, es decir, con la función `list()`. Llama a este objeto "lista".
+
+```{r cargaP21}
+x <- seq(1, 100, 2)
+y <- "tengo un talento natural para programar en R"
+z <- c(rep(TRUE, 74), rep(FALSE, 148), rep(c(TRUE, FALSE), 39))
+```
+```{r P21, exercise=TRUE, exercise.setup = "cargaP21"}
+
+```
+```{r P21-solution}
+lista <- list(x, y, z)
+```
+```{r P21-check}
+grade_code(incorrect = "Es fácil... SOlo debes ejecutar lista <- list(x, y, z)")
+```
+
+### Pregunta 22
+
+Finalmente, almacena la lista anterior junto con la frase "que ejercicio más extraño" en una nueva lista llamada lista_final.
+
+```{r cargaP22}
+x <- seq(1, 100, 2)
+y <- "tengo un talento natural para programar en R"
+z <- c(rep(TRUE, 74), rep(FALSE, 148), rep(c(TRUE, FALSE), 39))
+lista <- list(x, y, z)
+```
+```{r P22, exercise=TRUE, exercise.setup = "cargaP22"}
+
+```
+```{r P22-solution}
+lista_final <- list("que ejercicio más extraño", lista)
+```
+```{r P22-check}
+grade_code()
+```
+
+### Estructuras de control
+
+Lo hiciste muy bien hasta ahora, pero... ¿Te sientes en condiciones de enfrentar a las malvadas estructuras de control...? Creo en tu instinto programador, ¡vamos a vencerlas!
+
+### Pregunta 23
+
+Tu misión es construir una función que sea capaz de obtener la raíz cuadrada de la suma de dos números. Asignaremos esta función al objeto `raíz_suma`, en este ejercicio te ayudaré un poco y solo deberás editar el contenido de la función.
+
+```{r P23, exercise=TRUE}
+raiz_suma <- function(a,b){
+  
+}
+```
+
+```{r P23-check}
+grade_conditions(
+  pass_if(~.result(5,3)==sqrt(5+3)),
+  pass_if(~.result(7,9)==sqrt(7+9)),
+  grader_args = list(),
+  learnr_args = list(last_value = raiz_suma, envir_prep = new.env())
+)
+```
+
+### Pregunta 24
+
+Muy bien, ya sabes los fundamentos para crear funciones... Ahora combinemos esto junto con las estructuras de control que vimos durante la primera clase. En este ejercicio debes crear una función que sume todos los números de un vector y llamaremos a esta función "suma_vector". Es como usar la función "sum()", pero sin usar esa función, es decir, generar el mismo resultado pero sin usar "sum()". Ya tienes los conocimientos suficientes para generar la función desde cero...
+
+```{r P24, exercise=TRUE}
+suma_vector <- function(){
+  
+}
+```
+```{r P24-hint-1}
+suma_vector <- function(a){
+  n <- length(a)
+
+}
+```
+```{r P24-hint-2}
+suma_vector <- function(a){
+  n <- length(a)
+  s <- a[1]+a[2]
+
+  s
+}
+```
+```{r P24-hint-3}
+suma_vector <- function(a){
+n <- length(a)
+  s <- a[1]+a[2]
+  if(n>2){}
+  
+}
+```
+```{r P24-hint-4}
+suma_vector <- function(a){
+n <- length(a)
+  s <- a[1]+a[2]
+  if(n>2){
+  for(i in 3:n){
+    s <- s+a[i]
+  }}
+}
+```
+```{r P24-check}
+grade_conditions(
+  pass_if(~.result(c(5,3))==sum(c(5,3))),
+  pass_if(~.result(c(7,2,4,7))==sum(c(7,2,4,7))),
+  grader_args = list(),
+  learnr_args = list(last_value = suma_vector, envir_prep = new.env())
+)
+```
+
+### Pregunta 25
+
+Parece que ya lo dominas... Está bien, ahora te voy a poner algo más desafiante y si logras terminarlo te dejaré en paz... Recuerda que antes usamos la función "seq()", ahora debes construir una función que muestre los primeros *n* números pares por tu cuenta **pero sin usar la función "seq()"**, solamente puedes usar estructuras de control. Esta función debe tener solo tres argumentos: el primero es la cantidad de números deseados, el segundo argumento es de donde se inicia y el tercero servirá para indicar la distancia entre los números... ¡Muéstrame todo tu poder!
+
+```{r P25, exercise=TRUE}
+secuencia <- function(n, inicio, distancia){
+  
+}
+```
+```{r P25-hint-1}
+secuencia <- function(n, inicio, distancia){
+  x <- c()
+}
+```
+```{r P25-hint-2}
+secuencia <- function(n, inicio, distancia){
+  x <- c()
+  x[1] <- inicio
+}
+```
+```{r P25-hint-3}
+secuencia <- function(n, inicio, distancia){
+  x <- c()
+  x[1] <- inicio
+  for(i in 1:(n-1)){
+    
+  }
+}
+```
+```{r P25-hint-4}
+secuencia <- function(n, inicio, distancia){
+  x <- c()
+  x[1] <- inicio
+  for(i in 1:(n-1)){
+    x[i+1] <- x[i]+distancia
+  }
+}
+```
+```{r P25-check}
+grade_conditions(
+  pass_if(~.result(10,2,2)==seq(2,20,2)),
+  pass_if(~.result(20,2,2)==seq(2,40,2)),
+  grader_args = list(),
+  learnr_args = list(last_value = secuencia, envir_prep = new.env())
+)
+```
+
+## 02-Bases de datos
+
+Así que la sección de fundamentos de R te parece algo básica y decidiste venir aquí... Eso me agrada, ¡juntos resolveremos todos los ejercicios que no puso ese tirano profesor!
+
+### Pregunta 26
+
+Es el 23 de abril de 1912, te han contactado para hacer un análisis de las víctimas del hundimiento del titanic, muchas personas aún están tratando de anlizar estos datos. Viajaste del futuro pero nunca te detuviste a estudiar esos números, afortunadamente viajaste con tu computadora y con R instalado... Estos datos ya están cargados en R, la base se llama *Titanic*, démosle un vistazo.
+
+```{r P26, exercise=TRUE}
+
+```
+```{r P26-solution}
+Titanic
+```
+```{r P26-check}
+grade_code(incorrect = "Solamente escribe Titanic")
+```
+
+### Pregunta 27
+
+Es un formato bastante extraño... Se trata de un arreglo, o `array` de 4 dimensiones. Por ejemplo, un arreglo de dos dimensiones sería como una matriz común y corriente, en ese caso las filas y las columnas representan las dos dimensiones, es como el clásico gráfico con los ejes *x* e *y*.
+
+Si tomamos dos matrices, digamos A y B, y "colocamos" una sobre otra, tendríamos una tercera dimensión, sería como el clásico gráfico con los ejes *x*, *y* y *z*.
+
+Si repetimos este concepto, podemos agregar una gran cantidad de dimensiones, pero cada vez es más difícil de imaginar. Puedes encontrar más información [aquí](https://www.cesargamboasanabria.com/es/post/2019-06-23-apply/).
+
+Volamos al arreglo de datos `Titanic`. Es un formato algo difícil de entender, sería mejor tenerlo todo como una sola base de datos. Si revisamos la ayuda de R escribiendo `Titanic` nos damos cuenta que la primera dimensión del arreglo es la ***clase*** a la que pertenecían las personas, la segunda dimensión es el ***sexo***, la tercera involucra la ***edad*** y la cuarta es si la persona ***sobrevivó***. Veamos ahora las primeras categorías de las primeras dos dimensiones:
+
+```{r P27, exercise=TRUE}
+
+```
+```{r P27-solution}
+Titanic[1,1,,]
+```
+```{r P27-check}
+grade_code(correct = ".Veamos detalladamente esta tabla: Dice que solamente sobrevivieron 5 niños y que además murieron 118 adultos y sobrevivieron 57. Mira los resultados del ejercicio 26, ¿puedes ubicar estos números?")
+```
+
+### Pregunta 28
+
+Es momento de empezar a ordenar un poco las cosas. El ejercicio 26 nos mostraba el resultado como un `array`, pero es más conveniente visualizarlo como un `data.frame`. Para ello pondremos en práctica todo lo visto hasta el momento. Lo primero será convertir ese arreglo en algo más manejable, como una lista.
+
+Tu misión es generar una lista con *4* elementos, y no son otra cosa que las 4 tablas mostradas en el arreglo. Existen muchas formas de hacer esto, pero quizá la más eficiente sea utilizar un ciclo `for()`.
+
+
+```{r P28, exercise=TRUE}
+
+```
+```{r P28-hint-1}
+k <- 1
+lista <- list()
+```
+```{r P28-hint-2}
+k <- 1
+lista <- list()
+for(i in 1:2){
+
+}
+```
+```{r P28-hint-3}
+k <- 1
+lista <- list()
+for(i in 1:2){
+  for(j in 1:2){
+    
+  }
+}
+```
+```{r P28-hint-4}
+k <- 1
+lista <- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+  }
+}
+```
+```{r P28-hint-5}
+k <- 1
+lista <- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista
+```
+```{r P28-check}
+k <- 1
+lista_respuesta <- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista_respuesta[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+
+grade_result(pass_if(function(x) identical(x, lista_respuesta)))
+```
+
+### Pregunta 29
+
+Muy bien, ahora tenemos una lista con 4 elementos, donde cada elemento es una tabla 4x2. El siguiente paso es convertir cada una de esas tablas en un `data.frame`, el resultado final debe tener únicamente 3 variables: *Class*, *Sex* y *Freq*.
+
+```{r cargaP29}
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+```
+```{r P29, exercise=TRUE, exercise.setup = "cargaP29"}
+
+```
+```{r P29-hint-1}
+lista <- lapply(lista, )
+```
+```{r P29-check}
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista_respuesta <- lapply(lista, as.data.frame)
+grade_result(pass_if(function(x) identical(x, lista_respuesta)))
+```
+
+### Pregunta 30
+
+Ahora cada elemento de la lista es un `data.frame`, pero no tenemos toda la información pues nos falta incorporar las variables **edad** y si la persona **sobrevivió**. Comencemos agregando la variable **edad** a cada `data.frame`; si repasamos el ejercicio 26, podemos observar que la primera tabla es para niños (Child), la segunda para adultos (Adult), la tercera para niños y la última para adultos; de esta manera el primer `data.frame` debería tener un variable llamada **edad** con 8 veces la palabra *"niño"*.
+
+Este ejercicio puede resolverse de muchas maneras, aunque te recomendaría utilizar `mapply()`, puedes encontrar más detalles en [este post](https://www.cesargamboasanabria.com/es/post/2020-03-01-eapply_rapply_mapply/).
+
+```{r cargaP30}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+```
+```{r P30, exercise=TRUE, exercise.setup = "cargaP30"}
+
+```
+```{r P30-hint-1}
+lista <- mapply()
+```
+```{r P30-hint-2}
+lista <- mapply(function(lista, datos, variable){},)
+```
+```{r P30-hint-3}
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] 
+},)
+```
+```{r P30-hint-4}
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+},)
+lista
+```
+```{r P30-hint-5}
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), )
+```
+```{r P30-hint-6}
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), )
+```
+```{r P30-hint-7}
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+lista
+```
+```{r P30-check}
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+lista_respuesta <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+grade_result(pass_if(function(x) identical(x, lista_respuesta)))
+```
+
+### Pregunta 31
+
+Veo que aprendes rápido... Ahora realiza el mismo ejercicio anterior pero ahora para agregar la variable **sobrevivó**, cuyas observaciones son **si** o **no**
+
+```{r cargaP31}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+```
+```{r P31, exercise=TRUE, exercise.setup = "cargaP31"}
+
+```
+```{r P31-hint-1}
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+```
+```{r P31-check}
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista_respuesta <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+grade_result(pass_if(function(x) identical(x, lista_respuesta)))
+```
+
+### Pregunta 32
+
+Cada vez va tomando más forma... AHora solamente falta unir todos los `data.frame` en uno solo, me pregunto cómo se gará eso...
+
+```{r cargaP32}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+```
+```{r P32, exercise=TRUE, exercise.setup = "cargaP32"}
+
+```
+```{r P32-hint-1}
+base <- do.call()
+```
+```{r P32-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base_respuesta <- do.call(rbind, lista)
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+### Pregunta 33
+
+¡Nuestra base de datos se ve hermosa!, aunque me resulta incómodo ver que algunos nombres de las variables sigan en inglés... ¡Cambiemos esos nombres por *clase*, *sexo* y *cantidad*!
+
+```{r cargaP33}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista)
+```
+```{r P33, exercise=TRUE, exercise.setup = "cargaP33"}
+
+```
+```{r P33-hint-1}
+base %>% 
+  rename()
+```
+```{r P33-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base_respuesta<- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq)
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+### Pregunta 34
+
+Wow... Que diferente se ve esta base de datos ahora... Ahora hagamos unos retoques...
+
+La variable clase es una de tipo `factor` cutos niveles son *1st*, *2nd*, *3rd* y *Crew*, vamos a cambiarlas por *1ra*, *2da*, *3ra* y *Tripulación*. También hagamos esto para la variable sexo, pero usando los niveles *Hombre* y *Mujer*.
+
+```{r cargaP34}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq)
+```
+```{r P34, exercise=TRUE, exercise.setup = "cargaP34"}
+
+```
+```{r P34-hint-1}
+base %>% 
+  mutate(clase=factor(clase, levels = c(levels(base$clase)), labels = c("1ra", "2da", "3ra", "Tripulación")),)
+```
+```{r P34-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base2 <- do.call(rbind, lista)
+base_respuesta <- base2 %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+### Pregunta 35
+
+Solo una cosa más... Cambiemos el orde de las columnas para que quede así: *clase*, *sexo*, *edad*, *sobrevivió* y *cantidad*.
+
+```{r cargaP35}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+```
+```{r P35, exercise=TRUE, exercise.setup = "cargaP35"}
+
+```
+```{r P35-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base_respuesta <- base[,c(1,2,4,5,3)]
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+### Pregunta 36
+
+Finalmente tenemos lista nuestra base de datos. Me interesa saber qué tal le fue a los adultos... ¿Sabes como **filtrar** esos casos?
+
+```{r cargaP36}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base<- base[,c(1,2,4,5,3)]
+```
+```{r P36, exercise=TRUE, exercise.setup = "cargaP36"}
+
+```
+```{r P36-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base_respuesta <- base[,c(1,2,4,5,3)] %>% 
+  filter(edad=="adulto")
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+
+### Pregunta 37
+
+Ahora muéstrame aquellos adultos que viajaban en primera y tercera clase.
+
+```{r cargaP37}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base<- base[,c(1,2,4,5,3)]
+```
+```{r P37, exercise=TRUE, exercise.setup = "cargaP37"}
+
+```
+```{r P37-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base_respuesta <- base[,c(1,2,4,5,3)] %>% 
+  filter(edad=="adulto" & clase %in% c("1ra", "3ra"))
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+### Pregunta 38
+
+Ahora quiero ver en un `data.frame` cuántos pasajeros sobrevivieron y cuántos no.
+
+
+```{r cargaP38}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base<- base[,c(1,2,4,5,3)]
+```
+```{r P38, exercise=TRUE, exercise.setup = "cargaP38"}
+
+```
+```{r P38-hint-1}
+base %>% 
+  group_by() 
+```
+```{r P38-hint-2}
+base %>% 
+  group_by(sobrevivió) %>% 
+  summarise(cantidad=)
+```
+```{r P38-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base_respuesta <- base[,c(1,2,4,5,3)] %>% 
+  group_by(sobrevivió) %>% 
+  summarise(cantidad=sum(cantidad))
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+### Pregunta 39
+
+Por último, me gustaría ver cuántas personas sobrevivieron o no según su sexo y edad, ya es lo último que te pido...
+
+```{r cargaP39}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base<- base[,c(1,2,4,5,3)]
+```
+```{r P39, exercise=TRUE, exercise.setup = "cargaP39"}
+
+```
+```{r P39-check}
+library(dplyr)
+k <- 1
+lista<- list()
+for(i in 1:2){
+  for(j in 1:2){
+    lista[[k]] <- Titanic[,,i,j]
+    k <- k+1
+  }
+}
+lista <- lapply(lista, as.data.frame)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(edad=variable)
+}, datos=1:4, variable=c("niño", "adulto", "niño", "adulto"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+lista <- mapply(function(lista, datos, variable){
+  lista[[datos]] %>% 
+    mutate(sobrevivió=variable)
+}, datos=1:4, variable=c("no", "si", "no", "si"), MoreArgs = list(lista=lista), SIMPLIFY = FALSE)
+
+base <- do.call(rbind, lista) %>% 
+  rename(clase=Class, sexo=Sex, cantidad=Freq) %>% 
+  mutate(clase=factor(clase, levels = c("1st",  "2nd",  "3rd",  "Crew"), labels = c("1ra", "2da", "3ra", "Tripulación")),
+         sexo=factor(sexo, levels = c("Male", "Female"), labels = c("Hombre", "Mujer")))
+
+base_respuesta <- base[,c(1,2,4,5,3)] %>% 
+  group_by(sobrevivió, sexo, edad) %>% 
+  summarise(cantidad=sum(cantidad)) 
+
+grade_result(pass_if(function(x) identical(x, base_respuesta)))
+```
+
+
+
+
+## 03-Visualización
+
+Como discutimos en clase, elaborar gráficos no es algo que siga unas reglas definidas, depende mucho de la creatividad. Por esta razón, la mejor forma de ponernos a prueba es programar los gráficos a partir de una idea.
+
+A continuación te voy a presentar una serie de gráficos que debes replicar. Es decir, a partir del conjunto de datos `iris`, debes generar por tu cuenta los gráficos que vas a ver. Cuando veas que los gráficos son iguales, puedes avanzar al siguiente.
+
+### Pregunta 40
+
+Replica el siguiente gráfico:
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length)) + geom_point() + theme_minimal()
+```
+```{r P40, exercise=TRUE}
+
+```
+```{r P40-hint-1}
+ggplot(data=iris)
+```
+```{r P40-hint-2}
+ggplot(data=iris,aes(x=Sepal.Width))
+```
+```{r P40-hint-3}
+ ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length))
+```
+```{r P40-hint-4}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length)) + 
+  geom_point() 
+```
+```{r P40-hint-5}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length)) + 
+  geom_point() + 
+  theme_minimal()
+```
+
+### Pregunta 41
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + geom_point() + theme_minimal()
+```
+```{r P41, exercise=TRUE}
+
+```
+```{r P41-hint-1}
+ggplot(data=iris)
+```
+```{r P41-hint-2}
+ggplot(data=iris,aes(x=Sepal.Width))
+```
+```{r P41-hint-3}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length))
+```
+```{r P41-hint-4}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point() 
+```
+```{r P41-hint-5}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point() + 
+  theme_minimal()
+```
+
+### Pregunta 42
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + geom_point() +geom_smooth() + theme_minimal()
+```
+```{r P42, exercise=TRUE}
+
+```
+```{r P42-hint-1}
+ggplot(data=iris,aes(x=Sepal.Width))
+```
+```{r P42-hint-2}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length))
+```
+```{r P42-hint-3}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species))
+```
+```{r P42-hint-4}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point()
+```
+```{r P42-hint-5}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point() +
+  geom_smooth()
+```
+```{r P42-hint-6}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point() +
+  geom_smooth() + 
+  theme_minimal()
+```
+
+
+### Pregunta 43
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + geom_point() +geom_smooth(se=FALSE)+
+ theme_minimal()
+```
+```{r P43, exercise=TRUE}
+
+```
+```{r P43-hint-1}
+ggplot(data=iris,aes(x=Sepal.Width))
+```
+```{r P43-hint-2}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length))
+```
+```{r P43-hint-3}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species))
+```
+```{r P43-hint-4}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point()
+```
+```{r P43-hint-5}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point() +
+  geom_smooth(se=FALSE)
+```
+```{r P43-hint-6}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) + 
+  geom_point() +
+  geom_smooth(se=FALSE)+
+  theme_minimal()
+```
+
+
+### Pregunta 44
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point() + geom_smooth(se=FALSE) +facet_wrap(~Species) +theme_minimal()
+```
+```{r P44, exercise=TRUE}
+
+```
+```{r P44-hint-1}
+ggplot(data=iris) 
+```
+```{r P44-hint-2}
+ggplot(data=iris,aes(x=Sepal.Width))
+```
+```{r P44-hint-3}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length))
+```
+```{r P44-hint-4}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) 
+```
+```{r P44-hint-5}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+  geom_point() 
+```
+```{r P44-hint-6}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point() + 
+  geom_smooth(se=FALSE) 
+```
+```{r P44-hint-7}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+  geom_point() + 
+  geom_smooth(se=FALSE) +
+  facet_wrap(~Species)
+```
+
+### Pregunta 45
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point() + geom_smooth(se=FALSE) +facet_wrap(~Species,scale='free_y') +theme_minimal()
+```
+```{r P45, exercise=TRUE}
+
+```
+```{r P45-hint-1}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species))
+```
+```{r P45-hint-2}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point()
+```
+```{r P45-hint-3}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point() + 
+  geom_smooth(se=FALSE)
+```
+```{r P45-hint-4}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point() + 
+  geom_smooth(se=FALSE) +
+  facet_wrap(~Species,scale='free_y')
+```
+```{r P45-hint-5}
+ggplot(data=iris,aes(x=Sepal.Width, y=Sepal.Length,color=Species)) +
+geom_point() + 
+  geom_smooth(se=FALSE) +
+  facet_wrap(~Species,scale='free_y') +
+  theme_minimal()
+```
+
+
+### Pregunta 46
+
+```{r}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + geom_boxplot() +theme_minimal()+
+theme(legend.position="none")
+```
+```{r P46, exercise=TRUE}
+
+```
+```{r P46-hint-1}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species))
+```
+```{r P46-hint-2}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + 
+  geom_boxplot()
+```
+```{r P46-hint-3}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + 
+  geom_boxplot() +
+  theme_minimal()
+```
+```{r P46-hint-4}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + 
+  geom_boxplot() +
+  theme_minimal()+
+  theme(legend.position="none")
+```
+
+### Pregunta 47
+
+```{r}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + geom_violin() +theme_minimal()+
+theme(legend.position="none")
+```
+```{r P47, exercise=TRUE}
+
+```
+```{r P47-hint-1}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species))
+```
+```{r P47-hint-2}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + 
+  geom_violin()
+```
+```{r P47-hint-3}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + 
+  geom_violin() +
+  theme_minimal()
+```
+```{r P47-hint-4}
+ggplot(data=iris,aes(x=Species, y=Petal.Length,color=Species)) + 
+  geom_violin() +
+  theme_minimal()+
+  theme(legend.position="none")
+```
+
+### Pregunta 48
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length)) + geom_histogram() +theme_minimal()
+```
+```{r P48, exercise=TRUE}
+
+```
+```{r P48-hint-1}
+ggplot(data=iris,aes(x=Sepal.Length))
+```
+```{r P48-hint-2}
+ggplot(data=iris,aes(x=Sepal.Length)) + 
+  geom_histogram() 
+```
+```{r P48-hint-3}
+ggplot(data=iris,aes(x=Sepal.Length)) + 
+  geom_histogram() +
+  theme_minimal()
+```
+
+
+### Pregunta 49
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length)) + geom_histogram(binwidth=0.3) +theme_minimal()
+```
+```{r P49, exercise=TRUE}
+
+```
+```{r P49-hint-1}
+ggplot(data=iris,aes(x=Sepal.Length))
+```
+```{r P49-hint-2}
+ggplot(data=iris,aes(x=Sepal.Length)) + 
+  geom_histogram(binwidth=0.3)
+```
+```{r P49-hint-3}
+ggplot(data=iris,aes(x=Sepal.Length)) + 
+  geom_histogram(binwidth=0.3) +
+  theme_minimal()
+```
+
+
+### Pregunta 50
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + geom_histogram() +theme_minimal()
+```
+```{r P50, exercise=TRUE}
+
+```
+```{r P50-hint-1}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + 
+  geom_histogram()
+```
+```{r P50-hint-2}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + 
+  geom_histogram() +
+  theme_minimal()
+```
+
+### Pregunta 51
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + geom_histogram() +theme_minimal() +facet_wrap(~Species)
+```
+```{r P51, exercise=TRUE}
+
+```
+```{r P51-hint-1}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species))
+```
+```{r P51-hint-2}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + 
+  geom_histogram() 
+```
+```{r P51-hint-3}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + 
+  geom_histogram() +
+  theme_minimal() 
+```
+```{r P51-hint-4}
+ggplot(data=iris,aes(x=Sepal.Length,fill=Species)) + 
+  geom_histogram() +
+  theme_minimal() +
+  facet_wrap(~Species)
+```
+
+### Pregunta 52
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length,color=Species)) + geom_density() +theme_minimal()
+```
+```{r P52, exercise=TRUE}
+
+```
+```{r P52-hint-1}
+ggplot(data=iris,aes(x=Sepal.Length,color=Species))
+```
+```{r P52-hint-2}
+ggplot(data=iris,aes(x=Sepal.Length,color=Species)) + 
+  geom_density()
+```
+```{r P52-hint-3}
+ggplot(data=iris,aes(x=Sepal.Length,color=Species)) + 
+  geom_density() +
+  theme_minimal()
+```
+
+### Pregunta 53
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length,y=Petal.Length,fill=Species)) + geom_bin2d() + theme_minimal()
+```
+```{r P53, exercise=TRUE}
+
+```
+```{r P53-hint-1}
+ggplot(data=iris,aes(x=Sepal.Length,y=Petal.Length,fill=Species))
+```
+```{r P53-hint-2}
+ggplot(data=iris,aes(x=Sepal.Length,y=Petal.Length,fill=Species)) + 
+  geom_bin2d() 
+```
+```{r P53-hint-3}
+ggplot(data=iris,aes(x=Sepal.Length,y=Petal.Length,fill=Species)) + 
+  geom_bin2d() + 
+  theme_minimal()
+```
+
+### Pregunta 54
+
+```{r}
+ggplot(data=iris,aes(x=Species,y=Petal.Length,color=Species)) + geom_bar(stat = "summary", fun.y = "mean") +
+theme_minimal()
+```
+```{r P54, exercise=TRUE}
+
+```
+```{r P54-hint-1}
+ggplot(data=iris,aes(x=Species,y=Petal.Length,color=Species))
+```
+```{r P54-hint-2}
+ggplot(data=iris,aes(x=Species,y=Petal.Length,color=Species)) + 
+  geom_bar(stat = "summary", fun.y = "mean")
+```
+```{r P54-hint-3}
+ggplot(data=iris,aes(x=Species,y=Petal.Length,color=Species)) + 
+  geom_bar(stat = "summary", fun.y = "mean") +
+  theme_minimal()
+```
+
+### Pregunta 55
+
+```{r}
+ggplot(data=iris,aes(x=Petal.Width,y=Petal.Length,color=Species)) +geom_density2d()+ theme_minimal()
+```
+```{r P55, exercise=TRUE}
+
+```
+```{r P55-hint-1}
+ggplot(data=iris,aes(x=Petal.Width,y=Petal.Length,color=Species)) 
+```
+```{r P55-hint-2}
+ggplot(data=iris,aes(x=Petal.Width,y=Petal.Length,color=Species)) +
+  geom_density2d()
+```
+```{r P55-hint-3}
+ggplot(data=iris,aes(x=Petal.Width,y=Petal.Length,color=Species)) +
+  geom_density2d() + 
+  theme_minimal()
+```
+
+
+
