@@ -54,7 +54,7 @@ Muy bien, ahora vamos a probar algo más avanzado. Utiliza la función c para ge
 
 ```
 ```{r P2-check}
-grade_result(pass_if(55:59))
+grade_result(pass_if(c(55,56,57,58,59)))
 ```
 
 ### Pregunta 3
