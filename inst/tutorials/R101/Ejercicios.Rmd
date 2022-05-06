@@ -8,6 +8,11 @@ output:
   learnr::tutorial:
     progressive: true
     allow_skip: true
+params:
+  pwd:
+    label: "Enter the Password, please!"
+    value: "holamundo"
+    input: password
 runtime: shiny_prerendered
 ---
 
@@ -292,7 +297,7 @@ Es momento de subir nuevamente el nivel. Ahora vamos a combinar todo lo que hemo
 
 ```
 ```{r P17-solution}
-x <- seq(1, 100, 2)
+x <- seq(2, 100, 2)
 ```
 ```{r P17-check}
 grade_code(incorrect = "Creo que ya usamos la función seq...")
