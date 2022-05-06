@@ -8,11 +8,6 @@ output:
   learnr::tutorial:
     progressive: true
     allow_skip: true
-params:
-  pwd:
-    label: "Enter the Password, please!"
-    value: "holamundo"
-    input: password
 runtime: shiny_prerendered
 ---
 
