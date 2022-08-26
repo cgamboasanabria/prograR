@@ -1,0 +1,149 @@
+---
+title: "Principios de Machine Learning para problemas de clasificación con R - Ejercicios"
+author: |
+  | César Gamboa Sanabria
+  | [www.cesargamboasanabria.com](www.cesargamboasanabria.com)
+  |
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(ggplot2)
+library(caret)
+library(dplyr)
+knitr::opts_chunk$set(echo = FALSE, exercise.checker = gradethis::grade_learnr, cache = FALSE, message = FALSE,warning = FALSE)
+```
+
+## 01-Conceptos básicos de clasificación
+
+¡Bienvenido(a) al curso Principios de Machine Learning para problemas de clasificación con R! Vamos a poner en práctica todo lo visto en la primera clase para verificar que todos los conceptos quedaron claros.
+
+### Conceptos básicos
+
+Lo primero será repasar lo discutido en clase para verificar que tenemos claro qué significa cada cosa. En los siguientes ejercicios se te presentará una pequeña versión de la consola sobre la cual podrás trabajar.
+
+### Pregunta 1
+
+Vamos a calentar con algunas preguntas sencilla sobre algo que discutimos en la primer clase:
+
+```{r P1}
+question("Cuando hablamos de científico de datos, ingeniero de datos y analista de datos, el que se dedica más al almacenamiento y movimiento de los datos es:",
+  answer("Científico de datos"),
+  answer("Ingeniero de datos", correct = TRUE),
+  answer("Analista de datos"),
+  correct = "¡Muy bien! el ingeniero de datos es el responsable del almacenamiento y el movimiento de los datos. Se dedican más a gestionar y mantener todo lo relacionado a las bases de datos, la instalación de las herramientas y la infraestructura en la nube que luego tanto el analista de datos como el científico de datos van a utilizar",
+  incorrect = "Fallaste </3... El analista de datos tiene el componente de negocio más desarrollado que el ingeniero de datos y básicamente lo que hace es explotar todas estas herramientas para sacar al información, interpretarla, y que le sirva de algo al negocio, mientras que el perfil de un científico de datos es mucho más académico y es común que su objetivo sea crear modelos para predecir eventos futuros.",
+  random_answer_order = TRUE)
+```
+
+### Pregunta 2
+
+```{r P2}
+question("Cuando utilizamos una matriz de confusión, en ella podemos encontrar:",
+  answer("La razón de verdaderos positivos."),
+  answer("La razón de verdaderos negativos."),
+  answer("La razón de falsos positivos."),
+  answer("La razón de falsos negativos."),
+  answer("Todas las anteriores.", correct = TRUE),
+  correct = "¡Exacto! Esa información y otra muy valiosa puede extraerse de una matriz de confusión.",
+  incorrect = "Respuesta equivocada... Pero estás en zona segura...",
+  random_answer_order = TRUE)
+```
+
+### Pregunta 3
+
+Ahora vamos a poner un poco en práctica la construcción desde cero de una matriz de confusión. Imaginemos que te acaban de pasar un reporte de transacciones fraudulentas, así como los resultados de un modelo que intenta predecir cuáles de esas transacciones son fraudulentas y cuales no. 
+
+Lo primero será crear un vector con las dos categorías a escoger: "fraude" y "no fraude". Es tu turno, crea ese vector y llámalo "categorias".
+
+```{r P3, exercise=TRUE}
+
+```
+```{r P3-hint-1}
+categorias <- c()
+```
+```{r P3-hint-2}
+categorias <- c("fraude")
+```
+```{r P3-hint-2}
+categorias <- c("fraude", "no fraude")
+```
+```{r P3-check}
+categorias <- c("fraude", "no fraude")
+
+grade_result(pass_if(function(x) identical(x, categorias)))
+```
+
+### Pregunta 4
+
+Ahora que ya tenemos las dos categorías, vamos primero a generar el vector con los valores observados, es decir, la verdadera clasificación sobre si un caso es o no un fraude. Según el registro que nos dieron, dice que hay 94 transacciones registradas como fraudulentas y 215 que no lo eran, así que es tu turno, almacena esa información en un vector que se llame "observados". 
+
+```{r cargaP4}
+categorias <- c("fraude", "no fraude")
+```
+```{r P4, exercise=TRUE, exercise.setup = "cargaP4"}
+
+```
+```{r P4-hint-1}
+observados <- factor()
+```
+```{r P4-hint-2}
+observados <- factor(rep(categorias), times=c())
+```
+```{r P4-hint-2}
+observados <- factor(rep(categorias, times=c(94, 215)))
+```
+```{r P4-hint-2}
+observados <- factor(rep(categorias, times=c(94, 215)),
+                     levels = rev(categorias))
+```
+```{r P4-check}
+categorias <- c("fraude", "no fraude")
+observados <- factor(rep(categorias, times=c(94, 215)),
+                     levels = rev(categorias))
+
+grade_result(pass_if(function(x) identical(x, observados)))
+```
+
+### Pregunta 5
+
+Muy bien, ahora, revisando los resultados arrojados por el modelo predictivo (que tú no puedes ver, solo yo porque soy una poderosa computadora >:D) que hubo 240 transacciones detectadas como fraudulentas y 78 que no lo fueron, así que almacena esta información en un vector llamado "predichos".
+
+```{r cargaP5}
+categorias <- c("fraude", "no fraude")
+```
+```{r P5, exercise=TRUE, exercise.setup = "cargaP4"}
+
+```
+```{r P5-hint-1}
+predichos <- factor()
+```
+```{r P5-hint-2}
+predichos <- factor(rep(categorias), times=c())
+```
+```{r P5-hint-2}
+predichos <- factor(rep(categorias, times=c(78, 240)))
+```
+```{r P5-hint-2}
+predichos <- factor(rep(categorias, times=c(78, 240)),
+                     levels = rev(categorias))
+```
+```{r P5-check}
+categorias <- c("fraude", "no fraude")
+predichos <- factor(rep(categorias, times=c(78, 240)),
+                     levels = rev(categorias))
+
+grade_result(pass_if(function(x) identical(x, predichos)))
+```
+
+## 02-Modelos lineales generalizados para problemas de clasificación
+
+## 03-Modelos de aprendizaje supervisado
+
+## 04-Métodos de selecicón y calibración
