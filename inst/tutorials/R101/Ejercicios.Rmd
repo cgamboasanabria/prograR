@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = FALSE, exercise.checker = gradethis::grade_learnr, 
 ```
 
 
-## 01-Fundamentos de R
+## 01-Introducción a R
 
 ¡Bienvenido(a) al curso! Vamos a poner en práctica todo lo visto en las sesiones para verificar que todos los conceptos quedaron claros.
 
@@ -503,13 +503,13 @@ grade_conditions(
 )
 ```
 
-## 02-Bases de datos
+## 02-R intermedio
 
 Así que la sección de fundamentos de R te parece algo básica y decidiste venir aquí... Eso me agrada, ¡juntos resolveremos todos los ejercicios que no puso ese tirano profesor!
 
 ### Pregunta 26
 
-Es el 23 de abril de 1912, te han contactado para hacer un análisis de las víctimas del hundimiento del titanic, muchas personas aún están tratando de anlizar estos datos. Viajaste del futuro pero nunca te detuviste a estudiar esos números, afortunadamente viajaste con tu computadora y con R instalado... Estos datos ya están cargados en R, la base se llama *Titanic*, démosle un vistazo.
+Es el 23 de abril de 1912, te han contactado para hacer un análisis de las víctimas del hundimiento del titanic, muchas personas aún están tratando de analizar estos datos. Viajaste del futuro pero nunca te detuviste a estudiar esos números, afortunadamente viajaste con tu computadora y con R instalado... Estos datos ya están cargados en R, la base se llama *Titanic*, démosle un vistazo.
 
 ```{r P26, exercise=TRUE}
 
