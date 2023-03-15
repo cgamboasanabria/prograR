@@ -1,5 +1,5 @@
 ---
-title: "Programación estadística en R - Ejercicios"
+title: "Programación en R - Ejercicios"
 author: |
   | César Gamboa Sanabria
   | [www.cesargamboasanabria.com](www.cesargamboasanabria.com)
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = FALSE, exercise.checker = gradethis::grade_learnr, 
 
 ## 01-Fundamentos de R
 
-¡Bienvenido(a) al curso de Programación Estadística en R! Vamos a poner en práctica todo lo visto en la primera clase para verificar que todos los conceptos quedaron claros.
+¡Bienvenido(a) al curso! Vamos a poner en práctica todo lo visto en las sesiones para verificar que todos los conceptos quedaron claros.
 
 ### Conceptos básicos
 
